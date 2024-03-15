@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" ><!--xmlns:th="http://www.thymeleaf.org" 이걸 지우는 이유는 ThymeleafConfig 클래스를 만들었기 때문에 thyemeleaf를 따로 빼서 묶어 줄수있다 -->
+<!-- xmlns:th="http://www.thymeleaf.org" 이 문서는 다순한 마크업 html 문서가 아니라 타임리프
+ 템플릿이 라는걸 알려주게 된다 (이걸 안써주면 thymeleaf가 동작을 안 할수도 있다)-->
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 페이지</title>
+</head>
+
+
+<body>
+
+
+<header id="header"></header>
+
+<main>
+   <header>
+       <h1>첫번째 글</h1>
+   </header>
+
+    <aside>
+        <p>Uno</p>
+        <p><a id="email" href="mailto:djkehh@gmail.com">uno@mail.com</a></p>
+        <p><time id="created-at" datetime="2022-01-01T00:00:00">2022-01-01</time></p>
+        <p><span id="hashtag" class="badge text-bg-secondary mx-1"><a class="text-reset">#java</a></span></p>
+    </aside>
+
+</main>
+
+<footer id="footer"></footer> <!--footer thml의 footer를 찾아가라는 거다 -->
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="header" th:replace="header :: header"/> <!-- sel(셀렉트)를 통해 header 문서르 찾는다--> <!--header thml의 header를 찾아가라는 거다 -->
+    <attr sel="footer" th:replace="footer :: footer"/>
+</thlogic>

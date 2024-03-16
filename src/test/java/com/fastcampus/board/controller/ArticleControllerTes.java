@@ -1,10 +1,12 @@
 package com.fastcampus.board.controller;
 
+import com.fastcampus.board.config.SecurityConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -13,6 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View Controller - 게시글")
+@Import(SecurityConfig.class) // 이걸 사용해서 security를 허용 시킨다
 @WebMvcTest(ArticleController.class) // 테스트 대상이 되는 컨트롤러만 빈으로 읽어드리는 것이 가능하다 (컨트롤러가 여러개 있을때 이클래스만 읽어들일수 있다)
 class ArticleControllerTest {
 
@@ -22,6 +25,8 @@ class ArticleControllerTest {
     public ArticleControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
+
+
 
     // @Disabled("구현중") //각 단위 메소드별로 테스트를 제외 시킨다
     @DisplayName("[view][Get] 게시글 리스트 (게시판) 페이지 - 정상호출")
@@ -36,9 +41,13 @@ class ArticleControllerTest {
                 .andExpect(view().name("articles/index"))// 뷰 이름은 articles/index에 있어야 하고
                 .andExpect(model().attributeExists("articles"));// 키값이 있는지 검사 //articles를 하나 넘겨줘야 한다
 
+
+//        Status = 401
+//        Error message = Unauthorized
+//         위 2개는 security때문에 인증을 해야하는데 인증을 못받아서 못들어간다는 뜻이다 하지만 위에 import를 사용해서 시큐리티config를 설정해주면 시큐리티가 동작되기 때문에 에러가 안일어난다
     }
 
-    @Disabled("구현중")
+
     @DisplayName("[view][Get] 게시글 상세 페이지 - 정상호출")
     @Test
     public void givenNoting_whenRequestingArticlesView_thenReturnsArticleView() throws Exception {
@@ -49,7 +58,7 @@ class ArticleControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("articles/detail")) // view가 있어야 된다
-                .andExpect(model().attributeExists("article"))// 키값이 있는지 검사
+                .andExpect(model().attributeExists("article"))// 키값이 있는지 검사 //java.lang.AssertionError: Model attribute 'article' does not exist null로 넣어서 없다고 뜨는거다
                 .andExpect(model().attributeExists("articleComments"));//댓글들
     }
 

@@ -30,9 +30,9 @@ public class ArticleController {
 
     @GetMapping
     public String articles(
-            @RequestParam(required = false) SearchType searchType,
+            @RequestParam(required = false) SearchType searchType, //required = false 반드시 있지 않아도 되는 거다
             @RequestParam(required = false) String searchValue,
-            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, //@PageableDefault size는 10이다
             ModelMap map
     ) {
         Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from);

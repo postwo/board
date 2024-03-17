@@ -1,4 +1,4 @@
-debug: false
+  debug: false
 management.endpoints.web.exposure.include: "*"
 logging:
   level:
@@ -33,7 +33,22 @@ spring:
     detection-strategy: annotated  #annotated? ????? ??? ?? ?? ???
   thymeleaf3:
     decoupled-logic: true
-
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_OAUTH_CLIENT_ID}
+            client-secret: ${KAKAO_OAUTH_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 
 
 

@@ -3,6 +3,7 @@ package com.fastcampus.board.repository;
 
 import com.fastcampus.board.domain.ArticleComment;
 import com.fastcampus.board.domain.QArticleComment;
+import com.fastcampus.board.domain.projection.ArticleCommentProjection;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,12 +14,15 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource //yaml 파일에서 detection-strategy: annotated 이것 때문에 어노테이션 사용
+@RepositoryRestResource(excerptProjection = ArticleCommentProjection.class) //yaml 파일에서 detection-strategy: annotated 이것 때문에 어노테이션 사용
 public interface ArticleCommentRepository extends
         JpaRepository<ArticleComment, Long>, //Long 아이디 타입을 뜻한다
         QuerydslPredicateExecutor<ArticleComment>,
         QuerydslBinderCustomizer<QArticleComment>
 {
+
+    List<ArticleComment> findByArticle_Id(Long articleId);
+    void deleteByIdAndUserAccount_UserId(Long articleCommentId, String userId);
 
     @Override // 검색에 대한 세부적인 규칙을 다시 재구성
     default void customize(QuerydslBindings bindings, QArticleComment root) { //선택적으로 검색할 수있게
@@ -30,3 +34,9 @@ public interface ArticleCommentRepository extends
         bindings.bind(root.createdBy).first((StringExpression::containsIgnoreCase));
     }
 }
+
+
+
+
+
+

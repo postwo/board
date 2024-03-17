@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 @Service
 public class PaginationService {
 
-    private static final int BAR_LENGTH = 5;
+    private static final int BAR_LENGTH = 5; // 페이지 네이션 바의 길이를 정한거다
 
 
     public List<Integer> getPaginationBarNumbers(int currentPageNumber, int totalPages) {
@@ -20,6 +20,6 @@ public class PaginationService {
 
     public int currentBarLength() {
         return BAR_LENGTH;
-    }
+    } //getter
 
 }

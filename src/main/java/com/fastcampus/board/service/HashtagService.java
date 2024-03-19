@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class HashtagService {
+public class
+HashtagService {
 
     private final HashtagRepository hashtagRepository;
 

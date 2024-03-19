@@ -26,13 +26,29 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
-  h2.console.enabled: false #???? false h2 db ?? ??? true? ??
+  h2.console.enabled: false
   sql.init.mode: always
-  data.rest: #dataRepository?  dependencies? ?? ?? ?? ?? ???
-    base-path: /api #??? http://localhost:8080/api ?????? ?????? /api? ???? ???
-    detection-strategy: annotated  #annotated? ????? ??? ?? ?? ???
+  data.rest:
+    base-path: /api
+    detection-strategy: annotated
   thymeleaf3:
     decoupled-logic: true
+  security:
+    oauth2:
+      client:
+        registration:  #사용할 oauth 공급자의 아이디를 입력해준다
+          kakao:
+            client-id: id
+            client-secret: key
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 
 
 
@@ -41,11 +57,14 @@ spring:
 
 
 
-  #data.rest:
+
+
+
+    #data.rest:
     # base-path: /api
     #detection-strategy: annotated
 
----
+#---
 
 #?? db ???? ?? ????
 #spring:
@@ -55,3 +74,27 @@ spring:
 #    driverClassName: org.h2.Driver
 #  sql.init.mode: always
 #  test.database.replace: none
+
+
+
+
+
+
+
+
+
+---
+
+spring:
+  config.activate.on-profile: heroku
+  datasource:
+    url: ${JAWSDB_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa.hibernate.ddl-auto: create
+  sql.init.mode: always
+
+---
+
+spring:
+  config.activate.on-profile: test
+  datasource.url: jdbc:h2:mem:testdb
